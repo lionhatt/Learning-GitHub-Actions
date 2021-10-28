@@ -1,38 +1,22 @@
-name: first
+name: complex
 
 on: push
 
 jobs:
- job1:
-  name: First job
+ ubuntu:
   runs-on: ubuntu-latest
   steps:
-  - name: Step one
-    uses: actions/checkout@v2
-  - name: Step two
-    run: echo date
- job2:
-  name: Second job
+    - run: date
+ windows:
   runs-on: windows-latest
   steps:
-  - name: Step one
-    uses: actions/checkout@v2
-  - name: Step two
-    run: "echo %date%"
- job3:
-  name: Third job
+    - run: date
+ macos:
   runs-on: macos-latest
   steps:
-  - name: Step one
-    uses: actions/checkout@v2
-  - name: Step two
-    run: echo date
- job4:
-  name: Fourth job
+    - run: date
+ depends:
   runs-on: windows-latest
   needs: [job1, job2, job3]
   steps:
-  - name: Step one
-    uses: actions/checkout@v2
-  - name: Step two
-    run: echo date
+    - run: date
