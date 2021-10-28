@@ -1,4 +1,4 @@
-name: Environment Variables
+name: Python Pipeline
 on: [push]
 jobs:
   Test:
@@ -15,7 +15,10 @@ jobs:
       - name: chekcout repo
         uses: actions/checkout@v2
       - name: build artifact
-        uses: actions/upload-artifact@v2.2.4  
+        uses: actions/upload-artifact@v2.2.4
+        with:
+          name: hello
+          path: .  
 
    
 
