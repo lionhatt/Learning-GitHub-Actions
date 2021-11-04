@@ -1,26 +1,28 @@
-# Chapter 05_11
+# GitHub Action to Create Releases Based on a Keyword
+The Keyword Releaser will create a release based on the keyword specified in the arguments.
 
-This directory contains two sub-directories, one for the `keyword-release-action` files and one for the `super-cool-project` files.
+# Environment Variables
+- `GITHUB_TOKEN` - _Required_ Allows the Action to authenticte with the GitHub API to create the release.
 
-Complete the following steps for *both* directories.
+# Arguments
+- _Required_ - A single keyword.  If the keyword is found in a commit message, a release will be created.  Although case is ignored, it's suggested to use a unique, uppercase string like `FIXED`, `READY_TO_RELEASE`, or maybe even `PINEAPPLE`.
 
+# Examples
+Here's an example workflow that uses the Keyword Releaser action.  The workflow is triggered by a `PUSH` event and looks for the keyword `"FIXED"`.
 
-- Create a repository on GitHub using the [New Repository](https://github.com/new) page.  Name it something that relates to the lesson like `exercise-files`.
+```
+name: keyword-releaser
 
-- In a terminal, run the following commands to initialize the directory as a git repository.
+on: [push]
 
-        git init
-        git add .
-        git commit -m 'first check in'
-
-- Now add the new repository you created as a remote for the local repo.
-
-        git remote add origin git@github.com:YOUR_GITHUB_USER_NAME_HERE/exercise-files.git
-
-- After the remote is added, push the files to the remote.
-
-        git push -u origin master
-
- - Browse to the repository on GitHub.com and reload the page to confirm the files have been properly pushed.
-
-Once the files are hosted on GitHub.com, you're ready to start making changes locally and pushing them to the remote repo.
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: automate6500/keyword-release-action@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        args: 'FIXED'
+```
